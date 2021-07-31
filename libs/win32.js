@@ -40,7 +40,7 @@ module.exports = function fontWin(fontName) {
   const regSystem = 'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
   const regUser = 'reg query "HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
 
-  const listFontUser = splitArr(fontListQuery(regSystem, fontName), process.env.SystemRoot + '\\');
+  const listFontUser = splitArr(fontListQuery(regSystem, fontName), process.env.SystemRoot + '\\fonts\\');
   const listFontSystem = splitArr(fontListQuery(regUser, fontName), '');
 
   return (listFontUser.concat(listFontSystem));
