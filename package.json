@@ -1,0 +1,26 @@
+{
+  "name": "font-query",
+  "version": "1.0.0",
+  "description": "font-query is a Node.js package for query the fonts available on your system.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salsan/font-query.git"
+  },
+  "keywords": [
+    "font",
+    "fonts",
+    "windows",
+    "win10",
+    "query"
+  ],
+  "author": "Salvatore Santagati",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/salsan/font-query/issues"
+  },
+  "homepage": "https://github.com/salsan/font-query#readme"
+}
