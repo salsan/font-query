@@ -15,7 +15,7 @@ npm install font-query
 ```js
 const fontQuery = require('font-query');
 
-let myFont = fontQuery('Bl');
+let myFont = fontQuery('Bal');
 
 console.log(myFont);
 ```

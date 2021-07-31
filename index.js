@@ -1,6 +1,6 @@
 const fontWin = require('./libs/win32.js');
 
-function fontQuery(fontName) {
+module.exports = function fontQuery(fontName) {
 
   if (fontName === undefined) {
     console.error('Variable is ' + fontName);
@@ -13,8 +13,4 @@ function fontQuery(fontName) {
     process.exit();
   }
 
-}
-
-module.exports = {
-  fontQuery: fontQuery
 }

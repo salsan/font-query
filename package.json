@@ -1,8 +1,10 @@
 {
   "name": "font-query",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "font-query is a Node.js package for query the fonts available on your system.",
-  "main": "index.js",
+  "main": "index.js",  "files": [
+      "libs/*.js"
+    ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
