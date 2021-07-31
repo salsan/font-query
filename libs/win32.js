@@ -35,7 +35,7 @@ function fontListQuery(regKey, fontName) {
   }
 }
 
-function fontWin(fontName) {
+module.exports = function fontWin(fontName) {
 
   const regSystem = 'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
   const regUser = 'reg query "HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
@@ -45,9 +45,4 @@ function fontWin(fontName) {
 
   return (listFontUser.concat(listFontSystem));
 
-
-}
-
-module.exports = {
-  fontWin: fontWin
 }
