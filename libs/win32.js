@@ -49,5 +49,5 @@ function fontWin(fontName) {
 }
 
 module.exports = {
-  fonWin: fontWin
+  fontWin: fontWin
 }
