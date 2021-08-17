@@ -1,48 +1,39 @@
 const {
-  execSync
-} = require('child_process');
+  fontListQuery,
+  splitQuery
+} = require('./utils.js')
 
 function splitArr(arr, path) {
   if (arr !== undefined) {
 
-    const fontArr = arr.split('\r\n');
-    fontArr.pop();
+    return list = splitQuery(arr, '\r\n').map(
+      item => {
+        let arr = splitQuery(item, '    REG_SZ    ');
+        return [arr[0].trim(), path + arr[1].trim()];
+      })
 
-    return (fontArr.map(item => {
-
-      let arr = item.split('    REG_SZ    ');
-      arr[1] = path + arr[1];
-      arr[0] = arr[0].trim();
-
-      return arr;
-    }))
-
-  } else return ([]);
-}
-
-function fontListQuery(regKey, fontName) {
-  let listFont;
-
-  try {
-    listFont = execSync(regKey + '| findstr /c:' + '"' + fontName + '"', {
-      stdio: 'pipe'
-    }).toString();
-  } catch (error) {
-    console.error(error.message)
-    return ([]);
-  } finally {
-    return listFont;
-  }
+  } else return [];
 }
 
 module.exports = function fontWin(fontName) {
 
-  const regSystem = 'reg query "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
-  const regUser = 'reg query "HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts" /s';
+  const reg = [
+    ['"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
+      process.env.SystemRoot + '\\fonts\\'
+    ],
+    ['"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
+      ""
+    ]
+  ]
 
-  const listFontUser = splitArr(fontListQuery(regSystem, fontName), process.env.SystemRoot + '\\fonts\\');
-  const listFontSystem = splitArr(fontListQuery(regUser, fontName), '');
+  const cmd = `reg query`;
+  const grep = `findstr /I /c:`;
 
-  return (listFontUser.concat(listFontSystem));
+  const fontUser = splitArr(fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}`, fontName),
+    `${reg[0][1]}`);
+  const fontSys = splitArr(fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}`, fontName),
+    `${reg[1][1]}`);
+
+  return (fontUser.concat(fontSys));
 
 }

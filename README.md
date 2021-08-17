@@ -2,7 +2,7 @@
 
 font-query is a Node.js package for query the fonts available on your system.
 
-Current version support **Windows**
+Current version support **Windows** and **Linux**
 
 ## Install
 
@@ -21,11 +21,12 @@ console.log(myFont);
 ```
 
 The return value of  `fonts` is an Array with name and relative path of query request
-
-    [
-      'Baloo (TrueType)',
-      'C:\\Users\\omen\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Baloo-Regular.ttf'
-    ]
+  [
+      [
+        'Baloo (TrueType)',
+        'C:\\Users\\omen\\AppData\\Local\\Microsoft\\Windows\\Fonts\\Baloo-Regular.ttf'
+      ]
+  ]
 
 # License
 

@@ -1,4 +1,5 @@
 const fontWin = require('./libs/win32.js');
+const fontLinux = require('./libs/linux.js');
 
 module.exports = function fontQuery(fontName) {
 
@@ -7,10 +8,16 @@ module.exports = function fontQuery(fontName) {
     process.exit(9);
   }
 
-  if (process.platform === 'win32') return fontWin(fontName);
-  else {
-    console.error('Platform not supported: ' + process.platform);
-    process.exit();
+  switch(process.platform){
+    case 'win32' :
+       return fontWin(fontName);
+       break;
+    case 'linux' :
+      return fontLinux(fontName);
+      break;
+    default:
+      console.error('Platform not supported: ' + process.platform);
+      process.exit();
   }
 
 }
