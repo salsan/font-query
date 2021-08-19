@@ -20,6 +20,6 @@ module.exports = function fontLinux(fontName) {
   const cmd = `fc-list`;
   const grep = `grep -i`;
 
-  return (splitArr(fontListQuery(`${cmd} | ${grep} `, fontName), ''));
+  return (splitArr(fontListQuery(`${cmd} | ${grep} ${fontName}`), ''));
 
 }

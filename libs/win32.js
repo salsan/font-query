@@ -28,10 +28,11 @@ module.exports = function fontWin(fontName) {
 
   const cmd = `reg query`;
   const grep = `findstr /I /c:`;
+  const exclude = `findstr /v "HKEY_`;
 
-  const fontUser = splitArr(fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}`, fontName),
+  const fontUser = splitArr(fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}${fontName} | ${exclude}`),
     `${reg[0][1]}`);
-  const fontSys = splitArr(fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}`, fontName),
+  const fontSys = splitArr(fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}${fontName} | ${exclude}`),
     `${reg[1][1]}`);
 
   return (fontUser.concat(fontSys));
