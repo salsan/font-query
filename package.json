@@ -2,11 +2,13 @@
   "name": "font-query",
   "version": "1.1.1",
   "description": "font-query is a Node.js package for query the fonts available on your system.",
-  "main": "index.js",  "files": [
-      "libs/*.js"
-    ],
+  "main": "index.js",
+  "files": [
+    "libs/*.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:fix": "eslint . --fix --ext .js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,12 @@
   "bugs": {
     "url": "https://github.com/salsan/font-query/issues"
   },
-  "homepage": "https://github.com/salsan/font-query#readme"
+  "homepage": "https://github.com/salsan/font-query#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1"
+  }
 }
