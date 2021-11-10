@@ -8,8 +8,8 @@ function splitArr(arr, path) {
 
     return list = splitQuery(arr, '\r\n').map(
       item => {
-        let arr = splitQuery(item, '    REG_SZ    ');
-        return [arr[0].trim(), path + arr[1].trim()];
+        let font = splitQuery(item, '    REG_SZ    ');
+        return [font[0].trim(), path + font[1].trim()];
       })
 
   } else return [];
