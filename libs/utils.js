@@ -3,7 +3,7 @@ const {
 } = require('child_process')
 
 function fontListQuery (cmd) {
-  let listFont = []
+  let listFont
 
   try {
     listFont = execSync(cmd, {
