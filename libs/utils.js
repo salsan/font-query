@@ -9,12 +9,13 @@ function fontListQuery (cmd) {
     listFont = execSync(cmd, {
       stdio: 'pipe'
     }).toString()
-
-    return listFont
   } catch (error) {
     console.error(error.message)
-    return []
+  } finally {
+    listFont = listFont || []
   }
+
+  return listFont
 }
 
 function splitQuery (query, separator) {
@@ -23,7 +24,12 @@ function splitQuery (query, separator) {
   return fontArr
 }
 
+function arrOrder (arr, path) {
+  return (arr[0].trim(), path + arr[1].trim())
+}
+
 module.exports = {
   fontListQuery: fontListQuery,
-  splitQuery: splitQuery
+  splitQuery: splitQuery,
+  arrOrder: arrOrder
 }

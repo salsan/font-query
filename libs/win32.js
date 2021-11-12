@@ -1,14 +1,16 @@
 const {
   fontListQuery,
-  splitQuery
+  splitQuery,
+  arrOrder
 } = require('./utils.js')
 
 function splitArr (arr, path) {
-  if (arr !== undefined) {
+  if ((arr !== undefined) && (arr.lenght > 0)) {
     return splitQuery(arr, '\r\n').map(
       item => {
         const font = splitQuery(item, '    REG_SZ    ')
-        return [font[0].trim(), path + font[1].trim()]
+        return arrOrder(font, path)
+        //    return [font[0].trim(), path + font[1].trim()]
       })
   } else return []
 }
