@@ -1,16 +1,27 @@
 const {
   fontListQuery,
-  splitQuery
+  splitQuery,
+  arrOrder
 } = require('./utils.js')
 
 function splitArr (arr, path) {
-  if (arr !== undefined) {
-    return splitQuery(arr, '\n').map(
-      item => {
-        const arr = splitQuery(item, ':')
-        return [arr[0].trim(), arr[1].trim()].reverse()
-      })
-  } else return []
+  let result
+
+  try {
+    if ((arr !== undefined) && (arr.lenght > 0)) {
+      result = splitQuery(arr, '\n').map(
+        item => {
+          const arr = splitQuery(item, ':')
+          //  return [arr[0].trim(), arr[1].trim()].reverse()
+          return arrOrder(arr, path).reverse
+        })
+    } else result = []
+  } catch (error) {
+    console.error(error)
+  } finally {
+    result = result || []
+  }
+  return result
 }
 
 module.exports = function fontLinux (fontName) {
