@@ -1,30 +1,35 @@
 const {
   execSync
-} = require('child_process');
+} = require('child_process')
 
-function fontListQuery(cmd) {
-  let listFont;
+function fontListQuery (cmd) {
+  let listFont
 
   try {
     listFont = execSync(cmd, {
       stdio: 'pipe'
-    }).toString();
+    }).toString()
   } catch (error) {
     console.error(error.message)
-    return [];
   } finally {
-    return listFont;
+    listFont = listFont || []
   }
+
+  return listFont
 }
 
-function splitQuery(query, separator) {
-  const fontArr = query.split(separator);
-  if (query[query.length - 1].trim() === '')
-    fontArr.pop();
-  return fontArr;
+function splitQuery (query, separator) {
+  const fontArr = query.split(separator)
+  if (query[query.length - 1].trim() === '') { fontArr.pop() }
+  return fontArr
+}
+
+function arrOrder (arr, path) {
+  return (arr[0].trim(), path + arr[1].trim())
 }
 
 module.exports = {
   fontListQuery: fontListQuery,
-  splitQuery: splitQuery
+  splitQuery: splitQuery,
+  arrOrder: arrOrder
 }
