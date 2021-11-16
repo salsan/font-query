@@ -6,20 +6,16 @@ const {
 } = require('./utils.js')
 
 module.exports = function fontWin (fontName) {
-  const reg = [
-    ['"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
-      process.env.SystemRoot + '\\fonts\\'
-    ],
-    ['"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
-      ''
-    ]
-  ]
+  const Reg = {
+    sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
+    local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
+  }
 
-  const cmd = 'reg query'
-  const grep = 'findstr /I /c:'
+  const OptionsQueryFonts = {
+    cmd: 'reg query',
+    grep: 'findstr /I /c:'
+  }
 
-  const consoleStrSys = fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}${fontName}`)
-  const consoleStrUser = fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}${fontName}`)
   const OptionsConfigWin32 = {
     newline: true,
     removeEmpty: true,
@@ -27,21 +23,33 @@ module.exports = function fontWin (fontName) {
     splitter: '    REG_SZ    '
   }
 
-  let fontUser = str2Array(consoleStrUser, OptionsConfigWin32)
+  const consoleStrSys = fontWinQuery(OptionsQueryFonts, fontName, Reg.sys)
+  const consoleStrUser = fontWinQuery(OptionsQueryFonts, fontName, Reg.local)
 
-  fontUser = fontUser.map(font => {
+  const fontUser = fontWinUser(consoleStrUser, OptionsConfigWin32)
+  const fontSys = fontWinSys(consoleStrSys, OptionsConfigWin32)
+
+  return fontUser.concat(fontSys)
+}
+
+function fontWinUser (str, Options) {
+  const user = str2Array(str, Options)
+
+  return user.map(font => {
     return arrTrim(font)
   })
+}
 
-  let fontSys = str2Array(consoleStrSys, OptionsConfigWin32)
+function fontWinSys (str, Options) {
+  const sys = str2Array(str, Options)
 
-  fontSys = fontSys.map(font => {
+  return sys.map(font => {
     return addPath(font, process.env.SystemRoot + '\\fonts\\')
   })
+}
 
-  if (fontSys.length > 0 && fontUser.length > 0) { return fontUser.concat(fontSys) }
-  if (fontSys.length > 0) return fontSys
-  if (fontUser.length > 0) return fontUser
-
-  return []
+function fontWinQuery (Options, name, regKey) {
+  return (
+    fontListQuery(`${Options.cmd} ${regKey} /s | ${Options.grep}${name}`)
+  )
 }
