@@ -10,6 +10,6 @@ describe('Query', function () {
     assert.ok(fontQuery('b'))
   })
   it('--v', function () {
-    assert.ok(fontQuery('v'))
+    assert.ok(fontQuery('--v'))
   })
 })

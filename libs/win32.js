@@ -1,19 +1,9 @@
 const {
   fontListQuery,
-  splitQuery,
-  arrOrder
+  addPath,
+  str2Array,
+  arrTrim
 } = require('./utils.js')
-
-function splitArr (arr, path) {
-  if ((arr !== undefined) && (arr.lenght > 0)) {
-    return splitQuery(arr, '\r\n').map(
-      item => {
-        const font = splitQuery(item, '    REG_SZ    ')
-        return arrOrder(font, path)
-        //    return [font[0].trim(), path + font[1].trim()]
-      })
-  } else return []
-}
 
 module.exports = function fontWin (fontName) {
   const reg = [
@@ -27,12 +17,31 @@ module.exports = function fontWin (fontName) {
 
   const cmd = 'reg query'
   const grep = 'findstr /I /c:'
-  const exclude = 'findstr /v "HKEY_'
 
-  const fontUser = splitArr(fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}${fontName} | ${exclude}`),
-    `${reg[0][1]}`)
-  const fontSys = splitArr(fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}${fontName} | ${exclude}`),
-    `${reg[1][1]}`)
+  const consoleStrSys = fontListQuery(`${cmd} ${reg[0][0]} /s | ${grep}${fontName}`)
+  const consoleStrUser = fontListQuery(`${cmd} ${reg[1][0]} /s | ${grep}${fontName}`)
+  const OptionsConfigWin32 = {
+    newline: true,
+    removeEmpty: true,
+    select: '    REG_SZ    ',
+    splitter: '    REG_SZ    '
+  }
 
-  return (fontUser.concat(fontSys))
+  let fontUser = str2Array(consoleStrUser, OptionsConfigWin32)
+
+  fontUser = fontUser.map(font => {
+    return arrTrim(font)
+  })
+
+  let fontSys = str2Array(consoleStrSys, OptionsConfigWin32)
+
+  fontSys = fontSys.map(font => {
+    return addPath(font, process.env.SystemRoot + '\\fonts\\')
+  })
+
+  if (fontSys.length > 0 && fontUser.length > 0) { return fontUser.concat(fontSys) }
+  if (fontSys.length > 0) return fontSys
+  if (fontUser.length > 0) return fontUser
+
+  return []
 }
