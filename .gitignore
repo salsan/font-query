@@ -118,3 +118,7 @@ otu-tool.*
 
 # Test File
 files/*
+
+#Snyk Files
+.dccache
+.dcignore
