@@ -1,54 +1,54 @@
 const {
   fontListQuery,
-  addPath,
   str2Array,
-  arrTrim
+  strFixType
 } = require('./utils.js')
 
 module.exports = function fontWin (fontName) {
-  const Reg = {
+  const reg = {
     sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
     local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
   }
 
-  const OptionsQueryFonts = {
-    cmd: 'reg query',
-    grep: 'findstr /I /c:'
-  }
+  const consoleStrSys = fontWinQuery(fontName, reg.sys)
+  const consoleStrUser = fontWinQuery(fontName, reg.local)
 
-  const OptionsConfigWin32 = {
+  const fontUser = fontWinUser(consoleStrUser)
+  const fontSys = fontWinSys(consoleStrSys)
+
+  return fontUser.concat(fontSys)
+}
+
+function fontWinArray (str, path) {
+  const option = {
     newline: true,
     removeEmpty: true,
     select: '    REG_SZ    ',
     splitter: '    REG_SZ    '
   }
+  const arr = str2Array(str, option)
 
-  const consoleStrSys = fontWinQuery(OptionsQueryFonts, fontName, Reg.sys)
-  const consoleStrUser = fontWinQuery(OptionsQueryFonts, fontName, Reg.local)
-
-  const fontUser = fontWinUser(consoleStrUser, OptionsConfigWin32)
-  const fontSys = fontWinSys(consoleStrSys, OptionsConfigWin32)
-
-  return fontUser.concat(fontSys)
-}
-
-function fontWinUser (str, Options) {
-  const user = str2Array(str, Options)
-
-  return user.map(font => {
-    return arrTrim(font)
+  return arr.map(font => {
+    return strFixType(font, path)
   })
 }
 
-function fontWinSys (str, Options) {
-  const sys = str2Array(str, Options)
-
-  return sys.map(font => {
-    return addPath(font, process.env.SystemRoot + '\\fonts\\')
-  })
+function fontWinUser (str) {
+  const path = ''
+  return fontWinArray(str, path)
 }
 
-function fontWinQuery (Options, name, regKey) {
+function fontWinSys (str) {
+  const path = process.env.SystemRoot + '\\fonts\\'
+  return fontWinArray(str, path)
+}
+
+function fontWinQuery (name, regKey) {
+  const Options = {
+    cmd: 'reg query',
+    grep: 'findstr /I /c:'
+  }
+
   return (
     fontListQuery(`${Options.cmd} ${regKey} /s | ${Options.grep}${name}`)
   )

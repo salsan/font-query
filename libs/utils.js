@@ -23,17 +23,12 @@ function fontListQuery (cmd) {
   return listFont
 }
 
-function addPath (arr, path) {
+function strFixType (arr, path) {
   return ([arr[0].trim(), path + arr[1].trim()])
-}
-
-function arrTrim (arr) {
-  return addPath(arr, '')
 }
 
 module.exports = {
   fontListQuery: fontListQuery,
-  addPath: addPath,
-  str2Array: str2Array,
-  arrTrim: arrTrim
+  strFixType: strFixType,
+  str2Array: str2Array
 }
