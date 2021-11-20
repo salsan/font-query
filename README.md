@@ -11,15 +11,29 @@ npm install font-query
 ```
 
 ## Usage
-
+### **Synchronous**
 ```js
-const fontQuery = require('font-query');
+const {fontQuery} = require('font-query');
 
 let myFont = fontQuery('Bal');
 
 console.log(myFont);
 ```
+### **Asynchronous**
+```js
+const {fontQueryAsync} = require('font-query');
 
+let myFont = fontQueryAsync('Bal');
+
+query.then(fonts => {
+   console.log(fonts)
+  })
+  .catch(err => {
+   console.log(err)
+ })
+
+
+```
 The return value of  `fonts` is an Array with name and relative path of query request
 
 ```bash
