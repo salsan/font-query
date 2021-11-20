@@ -1,8 +1,20 @@
 const assert = require('assert')
 
-const fontQuery = require('../index.js')
+const { fontQuery, fontQueryAsync } = require('../index.js')
 
-describe('Query', function () {
+describe('fontQueryAsync', function () {
+  it('bal', function () {
+    assert.ok(fontQueryAsync('bal'))
+  })
+  it('b', function () {
+    assert.ok(fontQueryAsync('b'))
+  })
+  it('--v', function () {
+    assert.ok(fontQueryAsync('--v'))
+  })
+})
+
+describe('fontQuery', function () {
   it('bal', function () {
     assert.ok(fontQuery('bal'))
   })
