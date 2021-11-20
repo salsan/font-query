@@ -5,7 +5,7 @@ const {
   fontListQueryAsync
 } = require('./utils.js')
 
-module.exports = function fontWin (fontName) {
+function fontWin (fontName) {
   const reg = {
     sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
     local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
@@ -55,7 +55,7 @@ function fontWinQuery (name, regKey) {
   )
 }
 
-module.exports.fontWinAsync = async function (fontName) {
+async function fontWinAsync (fontName) {
   const reg = {
     sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
     local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
@@ -79,4 +79,9 @@ async function fontWinQueryAsync (name, regKey) {
   return (
     await fontListQueryAsync(`${Options.cmd} ${regKey} /s | ${Options.grep}${name}`)
   )
+}
+
+module.exports = {
+  fontWin: fontWin,
+  fontWinAsync: fontWinAsync
 }

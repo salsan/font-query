@@ -1,7 +1,7 @@
 const { fontWin, fontWinAsync } = require('./libs/win32.js')
 const { fontLinux, fontLinuxAsync } = require('./libs/linux.js')
 
-module.exports = function fontQuery (fontName) {
+function fontQuery (fontName) {
   if (fontName === undefined) {
     console.error('Variable is ' + fontName)
     process.exit(9)
@@ -18,7 +18,7 @@ module.exports = function fontQuery (fontName) {
   }
 }
 
-module.exports.fontQueryAsync = async function (fontName) {
+async function fontQueryAsync (fontName) {
   if (fontName === undefined) {
     console.error('Variable is ' + fontName)
     process.exit(9)
@@ -33,4 +33,9 @@ module.exports.fontQueryAsync = async function (fontName) {
       console.error('Platform not supported: ' + process.platform)
       process.exit()
   }
+}
+
+module.exports = {
+  fontQuery: fontQuery,
+  fontQueryAsync: fontQueryAsync
 }

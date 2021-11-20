@@ -4,7 +4,7 @@ const {
   fontListQueryAsync
 } = require('./utils.js')
 
-module.exports = function fontLinux (fontName) {
+function fontLinux (fontName) {
   const cmd = 'fc-list'
   const grep = 'grep -i'
 
@@ -20,7 +20,7 @@ module.exports = function fontLinux (fontName) {
   return listFonts.map(font => font.reverse())
 }
 
-module.exports.fontLinuxAsync = async (fontName) => {
+async function fontLinuxAsync (fontName) {
   const cmd = 'fc-list'
   const grep = 'grep -i'
 
@@ -34,4 +34,9 @@ module.exports.fontLinuxAsync = async (fontName) => {
   })
 
   return listFonts.map(font => font.reverse())
+}
+
+module.exports = {
+  fontLinux: fontLinux,
+  fontLinuxAsync: fontLinuxAsync
 }
