@@ -10,14 +10,7 @@ function fontLinux (fontName) {
 
   const consoleStr = fontListQuery(`${cmd} | ${grep} ${fontName}`)
 
-  const listFonts = str2Array(consoleStr, {
-    newline: true,
-    removeEmpty: true, // remove empty array
-    select: ':style=', // select only array which respect this word and delete if is not divisibile
-    splitter: ': ' // split array in according with word choice
-  })
-
-  return listFonts.map(font => font.reverse())
+  return fontLinArray(consoleStr)
 }
 
 async function fontLinuxAsync (fontName) {
@@ -26,14 +19,18 @@ async function fontLinuxAsync (fontName) {
 
   const consoleStr = await fontListQueryAsync(`${cmd} | ${grep} ${fontName}`)
 
-  const listFonts = str2Array(consoleStr, {
+  return fontLinArray(consoleStr)
+}
+
+function fontLinArray (str) {
+  const arr = str2Array(str, {
     newline: true,
     removeEmpty: true, // remove empty array
     select: ':style=', // select only array which respect this word and delete if is not divisibile
     splitter: ': ' // split array in according with word choice
   })
 
-  return listFonts.map(font => font.reverse())
+  return arr.map(font => font.reverse())
 }
 
 module.exports = {
