@@ -25,7 +25,7 @@ const {fontQueryAsync} = require('font-query');
 
 let myFont = fontQueryAsync('Bal');
 
-query.then(fonts => {
+myFont.then(fonts => {
    console.log(fonts)
   })
   .catch(err => {
