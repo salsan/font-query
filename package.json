@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.1",
-    "mocha": "^9.1.3"
+    "mocha": "^9.2.2"
   },
   "dependencies": {
     "c2array": "^0.0.2"
