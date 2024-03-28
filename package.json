@@ -40,6 +40,6 @@
     "mocha": "^9.2.2"
   },
   "dependencies": {
-    "c2array": "^0.0.2"
+    "c2array": "^0.0.3"
   }
 }
