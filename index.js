@@ -13,14 +13,12 @@ function fontQuery (fontName) {
     case 'linux':
       return fontLinux(fontName)
     default:
-      console.error('Platform not supported: ' + process.platform)
       process.exit()
   }
 }
 
 async function fontQueryAsync (fontName) {
   if (fontName === undefined) {
-    console.error('Variable is ' + fontName)
     process.exit(9)
   }
 

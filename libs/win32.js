@@ -12,15 +12,15 @@ function fontWin (fontName) {
     local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
   }
 
-  const consoleStrSys = fontWinQuery(fontName, reg.sys)
-  const consoleStrUser = fontWinQuery(fontName, reg.local)
+  const consoleStrSys = fontWinQuery(reg.sys)
+  const consoleStrUser = fontWinQuery(reg.local)
 
   const fontUser = fontWinUser(consoleStrUser)
   const fontSys = fontWinSys(consoleStrSys)
 
   const fontList = fontUser.concat(fontSys)
 
-  return (fontFilter(fontName, fontList))
+  return fontFilter(fontName, fontList)
 }
 
 function fontWinArray (str, path) {
@@ -47,7 +47,7 @@ function fontWinSys (str) {
   return fontWinArray(str, path)
 }
 
-function fontWinQuery (name, regKey) {
+function fontWinQuery (regKey) {
   const Options = {
     cmd: 'reg query'
   }
@@ -63,18 +63,20 @@ async function fontWinAsync (fontName) {
     local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
   }
 
-  const consoleStrSys = await fontWinQueryAsync(fontName, reg.sys)
-  const consoleStrUser = await fontWinQueryAsync(fontName, reg.local)
+  const [consoleStrSys, consoleStrUser] = await Promise.all([
+    fontWinQueryAsync(reg.sys),
+    fontWinQueryAsync(reg.local)
+  ])
 
   const fontUser = fontWinUser(consoleStrUser)
   const fontSys = fontWinSys(consoleStrSys)
 
   const fontList = fontUser.concat(fontSys)
 
-  return (fontFilter(fontName, fontList))
+  return fontFilter(fontName, fontList)
 }
 
-async function fontWinQueryAsync (name, regKey) {
+async function fontWinQueryAsync (regKey) {
   const Options = {
     cmd: 'reg query'
   }
