@@ -2,7 +2,8 @@ const {
   fontListQuery,
   str2Array,
   strFixType,
-  fontListQueryAsync
+  fontListQueryAsync,
+  fontFilter
 } = require('./utils.js')
 
 function fontWin (fontName) {
@@ -17,7 +18,9 @@ function fontWin (fontName) {
   const fontUser = fontWinUser(consoleStrUser)
   const fontSys = fontWinSys(consoleStrSys)
 
-  return fontUser.concat(fontSys)
+  const fontList = fontUser.concat(fontSys)
+
+  return (fontFilter(fontName, fontList))
 }
 
 function fontWinArray (str, path) {
@@ -46,12 +49,11 @@ function fontWinSys (str) {
 
 function fontWinQuery (name, regKey) {
   const Options = {
-    cmd: 'reg query',
-    grep: 'findstr /I /c:'
+    cmd: 'reg query'
   }
 
   return (
-    fontListQuery(`${Options.cmd} ${regKey} /s | ${Options.grep}${name}`)
+    fontListQuery(`${Options.cmd} ${regKey} /s`)
   )
 }
 
@@ -67,18 +69,17 @@ async function fontWinAsync (fontName) {
   const fontUser = fontWinUser(consoleStrUser)
   const fontSys = fontWinSys(consoleStrSys)
 
-  return fontUser.concat(fontSys)
+  const fontList = fontUser.concat(fontSys)
+
+  return (fontFilter(fontName, fontList))
 }
 
 async function fontWinQueryAsync (name, regKey) {
   const Options = {
-    cmd: 'reg query',
-    grep: 'findstr /I /c:'
+    cmd: 'reg query'
   }
 
-  return (
-    await fontListQueryAsync(`${Options.cmd} ${regKey} /s | ${Options.grep}${name}`)
-  )
+  return await fontListQueryAsync(`${Options.cmd} ${regKey} /s`)
 }
 
 module.exports = {

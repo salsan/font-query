@@ -47,9 +47,23 @@ function strFixType (arr, path) {
   return ([arr[0].trim(), path + arr[1].trim()])
 }
 
+function fontFilter (fontName, fontList) {
+  const result = []
+
+  for (const item of fontList) {
+    const font = item[0].toLowerCase()
+    if (font.includes(fontName.toLowerCase())) {
+      result.push(item)
+    }
+  }
+
+  return result
+}
+
 module.exports = {
   fontListQuery: fontListQuery,
   fontListQueryAsync: fontListQueryAsync,
   strFixType: strFixType,
-  str2Array: str2Array
+  str2Array: str2Array,
+  fontFilter: fontFilter
 }

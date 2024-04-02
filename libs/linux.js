@@ -1,27 +1,33 @@
 const {
   fontListQuery,
   str2Array,
-  fontListQueryAsync
+  fontListQueryAsync,
+  fontFilter
 } = require('./utils.js')
 
 function fontLinux (fontName) {
   const cmd = 'fc-list'
-  const grep = 'grep -i'
 
-  const consoleStr = fontListQuery(`${cmd} | ${grep} ${fontName}`)
+  const consoleStr = fontListQuery(`${cmd}`)
 
-  return fontLinArray(consoleStr)
+  const fontsArray = fontLinArray(consoleStr)
+
+  const fontList = fontFilter(fontName, fontsArray)
+
+  return fontList
 }
 
 async function fontLinuxAsync (fontName) {
   const cmd = 'fc-list'
-  const grep = 'grep -i'
 
-  const consoleStr = await fontListQueryAsync(`${cmd} | ${grep} ${fontName}`)
+  const consoleStr = await fontListQueryAsync(`${cmd}`)
 
-  return fontLinArray(consoleStr)
+  const fontsArray = fontLinArray(consoleStr)
+
+  const fontList = fontFilter(fontName, fontsArray)
+
+  return fontList
 }
-
 function fontLinArray (str) {
   const arr = str2Array(str, {
     newline: true,
