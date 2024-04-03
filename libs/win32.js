@@ -8,8 +8,8 @@ const {
 
 function fontWin (fontName) {
   const reg = {
-    sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
-    local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
+    sys: 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts',
+    local: 'HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts'
   }
 
   const consoleStrSys = fontWinQuery(reg.sys)
@@ -48,19 +48,15 @@ function fontWinSys (str) {
 }
 
 function fontWinQuery (regKey) {
-  const Options = {
-    cmd: 'reg query'
-  }
+  const options = ['query', regKey, '/s']
 
-  return (
-    fontListQuery(`${Options.cmd} ${regKey} /s`)
-  )
+  return fontListQuery('reg', options)
 }
 
 async function fontWinAsync (fontName) {
   const reg = {
-    sys: '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"',
-    local: '"HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"'
+    sys: 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts',
+    local: 'HKCU\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts'
   }
 
   const [consoleStrSys, consoleStrUser] = await Promise.all([
@@ -77,11 +73,9 @@ async function fontWinAsync (fontName) {
 }
 
 async function fontWinQueryAsync (regKey) {
-  const Options = {
-    cmd: 'reg query'
-  }
+  const options = ['query', regKey, '/s']
 
-  return await fontListQueryAsync(`${Options.cmd} ${regKey} /s`)
+  return await fontListQueryAsync('reg', options)
 }
 
 module.exports = {

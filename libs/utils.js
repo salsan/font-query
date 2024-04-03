@@ -1,22 +1,20 @@
 const c2Array = require('c2array')
 const {
-  execSync,
-  exec
+  execFileSync,
+  execFile
 } = require('child_process')
 const util = require('util')
-const pexec = util.promisify(exec)
+const pexecFile = util.promisify(execFile)
 
 function str2Array (data, Options) {
   return c2Array(data, Options)
 }
 
-function fontListQuery (cmd) {
+function fontListQuery (cmd, args) {
   let listFont
 
   try {
-    listFont = execSync(cmd, {
-      stdio: 'pipe'
-    }).toString()
+    listFont = execFileSync(cmd, args).toString()
   } catch (error) {
     console.error(error.message)
   } finally {
@@ -26,12 +24,10 @@ function fontListQuery (cmd) {
   return listFont
 }
 
-async function fontListQueryAsync (cmd) {
+async function fontListQueryAsync (cmd, args) {
   let result
   try {
-    result = await pexec(cmd, {
-      stdio: 'pipe'
-    })
+    result = await pexecFile(cmd, args)
   } catch (error) {
     result = error
   }
