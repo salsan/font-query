@@ -1,6 +1,14 @@
 # font-query
 
-font-query is a Node.js package for query the fonts available on your system.
+font-query is a Node.js package for querying the fonts available on your system and returning their names and paths.
+
+
+[![Socket Badge](https://socket.dev/api/badge/npm/package/font-query)](https://socket.dev/npm/package/font-query)
+[![NPM Version](https://img.shields.io/npm/v/font-query.svg)](https://www.npmjs.com/package/font-query)
+[![NPM Install Size](https://packagephobia.com/badge?p=font-query)](https://packagephobia.com/result?p=font-query)
+[![NPM Downloads](https://img.shields.io/npm/dt/font-query.svg)](https://www.npmjs.com/package/font-query)
+[![License](https://img.shields.io/github/license/salsan/font-query.svg)](https://opensource.org/licenses/MIT)
+
 
 Current version support **Windows** and **Linux**
 
@@ -9,6 +17,13 @@ Current version support **Windows** and **Linux**
 ```bash
 npm install font-query
 ```
+
+Alternatively, if you wish to use font-query as a command-line tool:
+
+```bash
+npm install -g font-query
+```
+
 
 ## Usage
 ### **Synchronous**
@@ -34,7 +49,7 @@ myFont.then(fonts => {
 
 
 ```
-The return value of  `fonts` is an Array with name and relative path of query request
+The return value of fonts is an array with the name and relative path of the query request
 
 ```bash
   [
