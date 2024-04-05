@@ -3,6 +3,9 @@
   "version": "2.1.0",
   "description": "font-query is a Node.js package for query the fonts available on your system.",
   "main": "index.js",
+  "bin" : {
+    "font-query": "./bin/font-query.js"
+  },
   "files": [
     "libs/*.js"
   ],
@@ -23,7 +26,8 @@
     "linux",
     "findstr",
     "grep",
-    "fc-list"
+    "fc-list",
+    "reg"
   ],
   "author": "Salvatore Santagati",
   "license": "MIT",
