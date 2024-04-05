@@ -1,4 +1,5 @@
-# font-query
+![Font Query](https://github.com/salsan/font-query/assets/111319/a38b8b80-68fd-4768-82be-00f113e774f9)
+
 
 font-query is a Node.js package for querying the fonts available on your system and returning their names and paths.
 
