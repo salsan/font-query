@@ -15,10 +15,7 @@ function fontWin (fontName) {
   const consoleStrSys = fontWinQuery(reg.sys)
   const consoleStrUser = fontWinQuery(reg.local)
 
-  const fontUser = fontWinUser(consoleStrUser)
-  const fontSys = fontWinSys(consoleStrSys)
-
-  const fontList = fontUser.concat(fontSys)
+  const fontList = fontWinMerge(consoleStrUser, consoleStrSys)
 
   return fontFilter(fontName, fontList)
 }
@@ -64,10 +61,7 @@ async function fontWinAsync (fontName) {
     fontWinQueryAsync(reg.local)
   ])
 
-  const fontUser = fontWinUser(consoleStrUser)
-  const fontSys = fontWinSys(consoleStrSys)
-
-  const fontList = fontUser.concat(fontSys)
+  const fontList = fontWinMerge(consoleStrUser, consoleStrSys)
 
   return fontFilter(fontName, fontList)
 }
@@ -76,6 +70,15 @@ async function fontWinQueryAsync (regKey) {
   const options = ['query', regKey, '/s']
 
   return await fontListQueryAsync('reg', options)
+}
+
+function fontWinMerge (local, sys) {
+  const fontUser = fontWinUser(local)
+  const fontSys = fontWinSys(sys)
+
+  const fontList = fontUser.concat(fontSys)
+
+  return fontList
 }
 
 module.exports = {
